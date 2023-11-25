@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { db, collection, getFirestore, createRoom, firebaseApp } from './firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { createRoom } from './firebase';
 import { useDispatch } from 'react-redux';
-import { selectRoom } from './features/appSlice';
+import { selectRoom } from 'app/appSlice';
 
 export const OPTION_TYPE_ADD_CHANNEL = 'ADD_CHANNEL';
 export const OPTION_TYPE_CHANNEL = 'CHANNEL';

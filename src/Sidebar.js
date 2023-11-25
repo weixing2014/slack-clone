@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from 'react';
 import styled from 'styled-components';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -6,9 +8,10 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
-import SidebarOption, { OPTION_TYPE_ADD_CHANNEL, OPTION_TYPE_CHANNEL } from './SidebarOption';
-import { db, collection, getFirestore, createRoom, firebaseApp } from './firebase';
+import SidebarOption, { OPTION_TYPE_CHANNEL } from './SidebarOption';
+import { collection, getFirestore, firebaseApp } from './firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { OPTION_TYPE_ADD_CHANNEL } from './SidebarOption';
 
 function Sidebar() {
   const [rooms, loading, error] = useCollection(collection(getFirestore(firebaseApp), 'rooms'), {

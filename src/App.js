@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 

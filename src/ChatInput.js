@@ -13,13 +13,15 @@ function ChatInput({ roomId, roomName }) {
       const message = inputRef.current.value;
 
       await createMessage(roomId, message);
+
+      inputRef.current.value = '';
     }
   };
 
   return (
     <ChatInputContainer>
       <form>
-        <input ref={inputRef} placeholder={`Message #${roomName}`} />
+        <input disabled={!roomId} ref={inputRef} placeholder={`Message #${roomName}`} />
         <Button hidden type='submit' onClick={sendMessage}>
           SEND
         </Button>

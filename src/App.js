@@ -16,7 +16,7 @@ function App() {
         <AppBody>
           <Sidebar />
           <Routes>
-            <Route path='/' element={<ChatRoomContainer />} />
+            <Route path='/' element={<ChatRoom />} />
           </Routes>
         </AppBody>
       </BrowserRouter>
@@ -28,11 +28,5 @@ const AppBody = styled.div`
   display: flex;
   height: 100vh;
 `;
-
-function ChatRoomContainer() {
-  const roomId = useSelector(selectRoomId);
-
-  return roomId ? <ChatRoom /> : null;
-}
 
 export default App;

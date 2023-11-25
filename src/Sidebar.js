@@ -14,9 +14,12 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { OPTION_TYPE_ADD_CHANNEL } from './SidebarOption';
 
 function Sidebar() {
-  const [rooms, loading, error] = useCollection(collection(getFirestore(firebaseApp), 'rooms'), {
-    snapshotListenOptions: { includeMetadataChanges: true },
-  });
+  const [roomsCollection, loading, error] = useCollection(
+    collection(getFirestore(firebaseApp), 'rooms'),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
   return (
     <SidebarContainer>
@@ -35,8 +38,8 @@ function Sidebar() {
       <SidebarOption Icon={DraftsIcon} title='Message' />
       <hr />
       <SidebarOption Icon={AddIcon} title='Add channel' type={OPTION_TYPE_ADD_CHANNEL} />
-      {rooms &&
-        rooms.docs.map((doc) => (
+      {roomsCollection &&
+        roomsCollection.docs.map((doc) => (
           <SidebarOption
             key={doc.id}
             id={doc.id}

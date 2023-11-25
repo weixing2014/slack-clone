@@ -1,6 +1,7 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
+import { serverTimestamp } from 'firebase/firestore';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -22,6 +23,22 @@ export async function createRoom(name) {
 
   try {
     const docRef = await addDoc(roomCollection, { name });
+    console.log('Document written with ID: ', docRef.id);
+  } catch (error) {
+    console.error('Error adding document: ', error);
+  }
+}
+
+export async function createMessage(roomId, message) {
+  const messageCollection = collection(db, 'rooms', roomId, 'messages');
+  const timestamp = serverTimestamp();
+
+  try {
+    const docRef = await addDoc(messageCollection, {
+      message,
+      timestamp,
+    });
+
     console.log('Document written with ID: ', docRef.id);
   } catch (error) {
     console.error('Error adding document: ', error);

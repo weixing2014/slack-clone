@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import './App.css';
-import { BrowserRouter, Routes } from 'react-router-dom';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import 'App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Header from 'Header';
+import Sidebar from 'Sidebar';
+import ChatRoom from 'ChatRoom';
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         <Header />
         <AppBody>
           <Sidebar />
-          <Routes></Routes>
+          <Routes>
+            <Route path='/' element={<ChatRoom />} />
+          </Routes>
         </AppBody>
       </BrowserRouter>
     </div>

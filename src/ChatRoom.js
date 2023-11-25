@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { useSelector } from 'react-redux';
@@ -7,8 +7,17 @@ import { collection, getFirestore, firebaseApp } from './firebase';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import ChatInput from 'ChatInput';
 import { doc, orderBy, query } from 'firebase/firestore';
+import Message from 'Message';
 
 function ChatRoom() {
+  const scrollableContainerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (scrollableContainerRef.current) {
+      scrollableContainerRef.current.scrollTop = scrollableContainerRef.current.scrollHeight;
+    }
+  };
+
   const roomId = useSelector(selectRoomId);
 
   const [roomsDocument, loadinRoomsDocument, roomsDocumentError] = useDocument(
@@ -29,6 +38,10 @@ function ChatRoom() {
   console.log('roomsDocument :>> ', roomsDocument);
   console.log('messagesCollection :>> ', messagesCollection);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messagesCollection, roomId]);
+
   return (
     <ChatRoomContainer>
       <Header>
@@ -38,9 +51,16 @@ function ChatRoom() {
         </HeaderLeft>
         <HeaderRight>Details</HeaderRight>
       </Header>
-      <Messages>
+      <Messages ref={scrollableContainerRef}>
         {messagesCollection &&
-          messagesCollection.docs.map((doc) => <div>{JSON.stringify(doc.data())}</div>)}
+          messagesCollection.docs.map((doc) => (
+            <Message
+              key={doc.id}
+              name={doc.id}
+              createdAt={doc.data().timestamp}
+              content={doc.data().message}
+            />
+          ))}
       </Messages>
       <ChatInputContainer>
         <ChatInput roomId={roomId} roomName={roomsDocument?.data().name}></ChatInput>

@@ -4,18 +4,21 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { useSelector } from 'react-redux';
 import { selectRoomId } from 'app/appSlice';
 import { collection, getFirestore, firebaseApp } from './firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import ChatInput from 'ChatInput';
+import { doc } from 'firebase/firestore';
 
 function ChatRoom() {
   const roomId = useSelector(selectRoomId);
 
-  //   const [messages, loading, error] = useCollection(
-  //     collection(getFirestore(firebaseApp), 'rooms', roomId, 'messages'),
-  //     {
-  //       snapshotListenOptions: { includeMetadataChanges: true },
-  //     }
-  //   );
+  const [messagesCollection, loading, error] = useCollection(
+    collection(getFirestore(firebaseApp), 'rooms', roomId, 'messages'),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
+
+  console.log('messagesCollection :>> ', messagesCollection);
 
   return (
     <ChatRoomContainer>
@@ -26,7 +29,10 @@ function ChatRoom() {
         </HeaderLeft>
         <HeaderRight>Details</HeaderRight>
       </Header>
-      <Messages></Messages>
+      <Messages>
+        {messagesCollection &&
+          messagesCollection.docs.map((doc) => <div>{JSON.stringify(doc.data())}</div>)}
+      </Messages>
       <ChatInputContainer>
         <ChatInput roomId={roomId}></ChatInput>
       </ChatInputContainer>

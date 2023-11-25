@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from 'Header';
 import Sidebar from 'Sidebar';
 import ChatRoom from 'ChatRoom';
+import { selectRoomId } from 'app/appSlice';
+import { useSelector } from 'react-redux';
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
         <AppBody>
           <Sidebar />
           <Routes>
-            <Route path='/' element={<ChatRoom />} />
+            <Route path='/' element={<ChatRoomContainer />} />
           </Routes>
         </AppBody>
       </BrowserRouter>
@@ -26,5 +28,11 @@ const AppBody = styled.div`
   display: flex;
   height: 100vh;
 `;
+
+function ChatRoomContainer() {
+  const roomId = useSelector(selectRoomId);
+
+  return roomId ? <ChatRoom /> : null;
+}
 
 export default App;

@@ -42,6 +42,10 @@ function ChatRoom() {
     scrollToBottom();
   }, [messagesCollection, roomId]);
 
+  if (!roomId) {
+    return null;
+  }
+
   return (
     <ChatRoomContainer>
       <Header>
@@ -57,6 +61,7 @@ function ChatRoom() {
             <Message
               key={doc.id}
               name={doc.id}
+              image='https://lh3.googleusercontent.com/ogw/AKPQZvwjApUKqtwhLkq9Ct34VIzCOmbPgIOkyl9VGBpz=s32-c-mo'
               createdAt={doc.data().timestamp}
               content={doc.data().message}
             />

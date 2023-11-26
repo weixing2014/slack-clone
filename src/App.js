@@ -5,20 +5,29 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from 'Header';
 import Sidebar from 'Sidebar';
 import ChatRoom from 'ChatRoom';
-import { selectRoomId } from 'app/appSlice';
-import { useSelector } from 'react-redux';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase';
+import Login from 'Login';
 
 function App() {
+  const [user, loadingUser] = useAuthState(auth);
+
   return (
     <div className='App'>
       <BrowserRouter>
-        <Header />
-        <AppBody>
-          <Sidebar />
-          <Routes>
-            <Route path='/' element={<ChatRoom />} />
-          </Routes>
-        </AppBody>
+        {user ? (
+          <>
+            <Header />
+            <AppBody>
+              <Sidebar />
+              <Routes>
+                <Route path='/' element={<ChatRoom />} />
+              </Routes>
+            </AppBody>
+          </>
+        ) : (
+          <Login />
+        )}
       </BrowserRouter>
     </div>
   );

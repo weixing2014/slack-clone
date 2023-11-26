@@ -1,7 +1,10 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { serverTimestamp } from 'firebase/firestore';
+import { GoogleAuthProvider } from 'firebase/auth';
+
+const googleProvider = new GoogleAuthProvider();
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -45,4 +48,4 @@ export async function createMessage(roomId, message) {
   }
 }
 
-export { auth, db, firebaseApp, getFirestore, collection };
+export { signInWithPopup, auth, db, firebaseApp, getFirestore, collection, googleProvider };

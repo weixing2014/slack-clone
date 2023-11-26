@@ -5,7 +5,7 @@ import styled from 'styled-components';
 function Message({ image, name, createdAt, content }) {
   return (
     <MessageContainer>
-      <img src='https://lh3.googleusercontent.com/ogw/AKPQZvwjApUKqtwhLkq9Ct34VIzCOmbPgIOkyl9VGBpz=s32-c-mo' />
+      <img src={image} alt='avatar' />
       <MessageInfo>
         <h4>
           {name}

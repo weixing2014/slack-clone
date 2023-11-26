@@ -8,8 +8,9 @@ import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import ChatInput from 'ChatInput';
 import { doc, orderBy, query } from 'firebase/firestore';
 import Message from 'Message';
+import { Avatar } from '@material-ui/core';
 
-function ChatRoom() {
+function ChatRoom({ user }) {
   const scrollableContainerRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -50,7 +51,7 @@ function ChatRoom() {
     <ChatRoomContainer>
       <Header>
         <HeaderLeft>
-          <strong>#RoomId</strong>
+          <strong>#{roomsDocument?.data().name}</strong>
           <StarBorderIcon />
         </HeaderLeft>
         <HeaderRight>Details</HeaderRight>
@@ -60,15 +61,15 @@ function ChatRoom() {
           messagesCollection.docs.map((doc) => (
             <Message
               key={doc.id}
-              name={doc.id}
-              image='https://lh3.googleusercontent.com/ogw/AKPQZvwjApUKqtwhLkq9Ct34VIzCOmbPgIOkyl9VGBpz=s32-c-mo'
+              name={doc.data().displayName}
+              image={doc.data().avatarImage}
               createdAt={doc.data().timestamp}
               content={doc.data().message}
             />
           ))}
       </Messages>
       <ChatInputContainer>
-        <ChatInput roomId={roomId} roomName={roomsDocument?.data().name}></ChatInput>
+        <ChatInput roomId={roomId} roomName={roomsDocument?.data().name} user={user}></ChatInput>
       </ChatInputContainer>
     </ChatRoomContainer>
   );

@@ -12,16 +12,18 @@ import Login from 'Login';
 function App() {
   const [user, loadingUser] = useAuthState(auth);
 
+  console.log('user :>> ', user);
+
   return (
     <div className='App'>
       <BrowserRouter>
         {user ? (
           <>
-            <Header />
+            <Header user={user} />
             <AppBody>
-              <Sidebar />
+              <Sidebar user={user} />
               <Routes>
-                <Route path='/' element={<ChatRoom />} />
+                <Route path='/' element={<ChatRoom user={user} />} />
               </Routes>
             </AppBody>
           </>

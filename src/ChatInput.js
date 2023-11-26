@@ -3,7 +3,7 @@ import { createMessage } from './firebase';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-function ChatInput({ roomId, roomName }) {
+function ChatInput({ roomId, roomName, user }) {
   const inputRef = useRef(null);
 
   const sendMessage = async (e) => {
@@ -12,7 +12,7 @@ function ChatInput({ roomId, roomName }) {
     if (inputRef.current && inputRef.current.value && roomId) {
       const message = inputRef.current.value;
 
-      await createMessage(roomId, message);
+      await createMessage(roomId, message, user);
 
       inputRef.current.value = '';
     }
@@ -38,7 +38,8 @@ const ChatInputContainer = styled.div`
   }
   > form > input {
     height: 100%;
-    width: 99.5%;
+    width: calc(100% - 22px);
+    padding-left: 20px;
     outline: none;
     border: 1px solid lightgrey;
     border-right: 0;

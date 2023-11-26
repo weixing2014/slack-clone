@@ -32,7 +32,7 @@ export async function createRoom(name) {
   }
 }
 
-export async function createMessage(roomId, message) {
+export async function createMessage(roomId, message, user) {
   const messageCollection = collection(db, 'rooms', roomId, 'messages');
   const timestamp = serverTimestamp();
 
@@ -40,6 +40,8 @@ export async function createMessage(roomId, message) {
     const docRef = await addDoc(messageCollection, {
       message,
       timestamp,
+      avatarImage: user.photoURL,
+      displayName: user.displayName,
     });
 
     console.log('Document written with ID: ', docRef.id);

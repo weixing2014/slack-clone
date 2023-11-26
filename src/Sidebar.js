@@ -13,7 +13,7 @@ import { collection, getFirestore, firebaseApp } from './firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { OPTION_TYPE_ADD_CHANNEL } from './SidebarOption';
 
-function Sidebar() {
+function Sidebar({ user }) {
   const [roomsCollection, loading, error] = useCollection(
     collection(getFirestore(firebaseApp), 'rooms'),
     {
@@ -28,7 +28,7 @@ function Sidebar() {
           <h2>Xingster Inc.</h2>
           <h3>
             <FiberManualRecordIcon />
-            Xing Wei
+            {user.displayName}
           </h3>
         </SidebarInfo>
         <CreateIcon />

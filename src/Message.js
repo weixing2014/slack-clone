@@ -5,10 +5,16 @@ import styled from 'styled-components';
 function Message({ image, name, createdAt, content }) {
   return (
     <MessageContainer>
-      <img src={image} alt='avatar' />
+      <img
+        src={
+          image ||
+          'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg?w=136&h=136'
+        }
+        alt='avatar'
+      />
       <MessageInfo>
         <h4>
-          {name}
+          {name || 'Unknown'}
           <span>{moment(new Date(createdAt?.toDate())).format('YYYY-MM-DD HH:mm:ss')}</span>
         </h4>
         <p>{content}</p>
@@ -24,6 +30,7 @@ const MessageContainer = styled.div`
   > img {
     border-radius: 3px;
     width: 30px;
+    object-fit: cover;
   }
 `;
 
